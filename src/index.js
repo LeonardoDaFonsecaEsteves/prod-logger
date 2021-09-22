@@ -1,11 +1,7 @@
-/**
- * Module for logs in frameworks JS
- * @param {string} definedLevel
- * @param {boolean} seeUpperLevel
- * @returns a log according to the defined level of logs and whether
- *  or not logs above this level should be displayed
- */
- const logger = (definedLevel, seeUpperLevel = false) => {
+const logger = () => {
+    const definedLevel = window.localStorage.getItem('definedLevel');
+    const seeUpperLevel = window.localStorage.getItem('seeUpperLevel');
+
     /**
     * Level logs
     */
@@ -85,7 +81,6 @@
         const index = getIndexOf(definedLevel, keysLogsConst);
 
         const authorizedLevels = getLevelAuthorized(index, keysLogsConst);
-        console.log('authorizedLevels', authorizedLevels);
         if (authorizedLevels && controlValueInArray(typeLevel, authorizedLevels)) {
             return authorizedLevels.forEach(level => {
                 needSwitchToSeeUpperLevel(level, args)
@@ -94,7 +89,22 @@
         return null;
     };
 
+    /**
+    * Module for logs in frameworks JS
+    * @param {string} definedLevel
+    * @param {boolean} seeUpperLevel
+    * @returns a log according to the defined level of logs and whether
+    *  or not logs above this level should be displayed
+    */
+    const setup = (definedLevel, seeUpperLevel = false) => {
+        if (controlValueInArray(definedLevel.toUpperCase(), Object.keys(levelLogs.LEVEL))) {
+            window.localStorage.setItem('definedLevel', definedLevel);
+            window.localStorage.setItem('seeUpperLevel', seeUpperLevel);
+        }
+    }
+
     return {
+        setup,
         info: (...args) => loggerType(args, levelLogs.LEVEL.INFO),
         debug: (...args) => loggerType(args, levelLogs.LEVEL.DEBUG),
         warn: (...args) => loggerType(args, levelLogs.LEVEL.WARN),
