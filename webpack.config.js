@@ -1,18 +1,23 @@
 const path = require('path');
 
 module.exports = {
+    target: 'web',
     mode: 'production',
-    entry: './src/index.js',
+    entry: { index: './src/index.js' },
 
-  output: {
-    path: path.resolve('./dist'),
-    filename: 'index.js'
-  },
+    output: {
+        path: path.resolve(__dirname, './dist'),
+        filename: 'index.js',
+        library: "prod-logger",
+        libraryTarget: 'umd',
+        globalObject: 'this',
+        umdNamedDefine: true,
+    },
 
-  module: {
-    rules: [{
-      test: /\.js$/,
-      use: 'babel-loader'
-    }]
-  }
+    module: {
+        rules: [{
+            test: /\.js$/,
+            use: 'babel-loader'
+        }]
+    }
 };
