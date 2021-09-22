@@ -1,14 +1,16 @@
+"use strict";
 class LoggerService {
-    levelLogs = {
-        INFO: 'INFO',
-        DEBUG: 'DEBUG',
-        WARN: 'WARN',
-        ERROR: 'ERROR',
-        TRACE: 'TRACE'
-    };
-
-    definedLevel = '';
-    seeUpperLevel = false;
+    constructor() {
+        this.levelLogs = {
+            INFO: 'INFO',
+            DEBUG: 'DEBUG',
+            WARN: 'WARN',
+            ERROR: 'ERROR',
+            TRACE: 'TRACE'
+        };
+        this.definedLevel = '';
+        this.seeUpperLevel = false;
+    }
 
     setup(definedLevel, seeUpperLevel = false) {
         if (Object.keys(this.levelLogs).includes(definedLevel.toUpperCase())) {
@@ -98,4 +100,4 @@ class LoggerService {
     }
 }
 
-exports.logger = new LoggerService();
+export const logger = new LoggerService();
