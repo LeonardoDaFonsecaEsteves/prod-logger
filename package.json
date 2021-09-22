@@ -35,6 +35,9 @@
   "engines": {
     "node": ">=14.X.X"
   },
+  "files": [
+    "dist"
+  ],
   "engineStrict": true,
   "jest": {
     "collectCoverageFrom": [
