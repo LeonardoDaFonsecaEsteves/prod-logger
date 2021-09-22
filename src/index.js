@@ -1,116 +1,101 @@
-const logger = () => {
-    const definedLevel = window.localStorage.getItem('definedLevel');
-    const seeUpperLevel = window.localStorage.getItem('seeUpperLevel');
-
-    /**
-    * Level logs
-    */
-    const levelLogs = {
-        LEVEL: {
-            INFO: 'INFO',
-            DEBUG: 'DEBUG',
-            WARN: 'WARN',
-            ERROR: 'ERROR',
-            TRACE: 'TRACE'
-        }
+class LoggerService {
+    levelLogs = {
+        INFO: 'INFO',
+        DEBUG: 'DEBUG',
+        WARN: 'WARN',
+        ERROR: 'ERROR',
+        TRACE: 'TRACE'
     };
 
-    /**
-    * @param {string} value
-    * @param {array} array
-    * @returns true or false if value in array
-    */
-    const controlValueInArray = (value, array) => array.includes(value);
+    definedLevel = '';
+    seeUpperLevel = false;
 
-    /**
-    * @param {number} indexLevel
-    * @param {array} entriesLevel
-    * @returns array of level string
-    */
-    const getLevelAuthorized = (indexLevel, entriesLevel) => {
-        if (indexLevel >= 0) {
-            return seeUpperLevel
-                ? entriesLevel.filter((_, i) => i >= indexLevel)
-                : [entriesLevel.find((_, i) => i >= indexLevel)];
-        } else {
-            return false;
-        }
-    };
-
-    /**
-    * @param {string} value
-    * @param {array} array
-    * @returns index of the value in array
-    */
-    const getIndexOf = (value, array) => typeof value === 'string' && array.indexOf(value?.toUpperCase());
-
-    /**
-     * @param {any} args
-     * @returns only see upper level for definedLevel
-     */
-    const needSwitchToSeeUpperLevel = (typeLevel, args) => {
-        if (typeLevel === levelLogs.LEVEL.INFO) {
-            return console.info('[ INFO ] : ', args);
-        }
-        if (typeLevel === levelLogs.LEVEL.DEBUG) {
-            return console.debug('[ DEBUG ] : ', args);
-        }
-        if (typeLevel === levelLogs.LEVEL.TRACE) {
-            return console.trace('[ TRACE ] : ', args);
-        }
-        if (typeLevel === levelLogs.LEVEL.WARN) {
-            return console.warn('[ WARN ] : ', args);
-        }
-        if (typeLevel === levelLogs.LEVEL.ERROR) {
-            return console.error('[ ERROR ] : ', args);
+    setup(definedLevel, seeUpperLevel = false) {
+        if (Object.keys(this.levelLogs).includes(definedLevel.toUpperCase())) {
+            this.seeUpperLevel = seeUpperLevel;
+            this.definedLevel = definedLevel.toUpperCase();
         }
     }
 
-    /**
-    * @param {any} args
-    * @param {string} typeLevel
-    * @returns logger bassed for definedLevel
-    */
-    const loggerType = (args, typeLevel) => {
-        if (controlValueInArray(definedLevel, ['', undefined, null, ' '])) {
-            return null;
-        }
+    loggerType(arg, typeLevel) {
+        const getLevelAuthorized = (indexLevel, entriesLevel) => {
+            if (indexLevel >= 0) {
+                return this.seeUpperLevel
+                    ? entriesLevel.filter((_, i) => i >= indexLevel)
+                    : [entriesLevel.find((_, i) => i >= indexLevel)];
+            } else {
+                return false;
+            }
+        };
 
-        const keysLogsConst = Object.keys(levelLogs.LEVEL);
+        const seeLogLevel = (level, arg) => {
+            const date = new Date().toUTCString();
+            const log = { ...arg };
+            if (level === this.levelLogs.INFO) {
+                return console.info(`[ ${date} | TYPE: INFO ] => `, log);
+            }
+            if (level === this.levelLogs.DEBUG) {
+                return console.debug(`[ ${date} | TYPE: DEBUG ] =>`, log);
+            }
+            if (level === this.levelLogs.TRACE) {
+                return console.trace(`[ ${date} | TYPE: TRACE ] =>`, log);
+            }
+            if (level === this.levelLogs.WARN) {
+                return console.warn(`[ ${date} | TYPE: WARN ] =>`, log);
+            }
+            if (level === this.levelLogs.ERROR) {
+                return console.error(`[ ${date} | TYPE: ERRO ] =>`, log);
+            }
+        };
 
-        const index = getIndexOf(definedLevel, keysLogsConst);
+        const index = Object.keys(this.levelLogs).indexOf(this.definedLevel);
 
-        const authorizedLevels = getLevelAuthorized(index, keysLogsConst);
-        if (authorizedLevels && controlValueInArray(typeLevel, authorizedLevels)) {
-            return authorizedLevels.forEach(level => {
-                needSwitchToSeeUpperLevel(level, args)
+        const authorizedLevels = getLevelAuthorized(
+            index,
+            Object.keys(this.levelLogs)
+        );
+
+        const formatLog = (args) => {
+            const message = [];
+            args.forEach((arg) => {
+                if (typeof arg === 'object') {
+                    arg.map((el) => message.push(el));
+                } else {
+                    message.push(arg);
+                }
+            });
+            return message;
+        };
+
+        if (authorizedLevels) {
+            return authorizedLevels.forEach((level) => {
+                if (level === typeLevel) {
+                    seeLogLevel(level, formatLog(arg));
+                }
             });
         }
         return null;
-    };
-
-    /**
-    * Module for logs in frameworks JS
-    * @param {string} definedLevel
-    * @param {boolean} seeUpperLevel
-    * @returns a log according to the defined level of logs and whether
-    *  or not logs above this level should be displayed
-    */
-    const setup = (definedLevel, seeUpperLevel = false) => {
-        if (controlValueInArray(definedLevel.toUpperCase(), Object.keys(levelLogs.LEVEL))) {
-            window.localStorage.setItem('definedLevel', definedLevel);
-            window.localStorage.setItem('seeUpperLevel', seeUpperLevel);
-        }
     }
 
-    return {
-        setup,
-        info: (...args) => loggerType(args, levelLogs.LEVEL.INFO),
-        debug: (...args) => loggerType(args, levelLogs.LEVEL.DEBUG),
-        warn: (...args) => loggerType(args, levelLogs.LEVEL.WARN),
-        error: (...args) => loggerType(args, levelLogs.LEVEL.ERROR),
-        trace: (...args) => loggerType(args, levelLogs.LEVEL.TRACE)
-    };
-};
+    info(...args) {
+        this.loggerType(args, this.levelLogs.INFO);
+    }
 
-export default logger;
+    debug(...args) {
+        this.loggerType(args, this.levelLogs.DEBUG);
+    }
+
+    warn(...args) {
+        this.loggerType(args, this.levelLogs.WARN);
+    }
+
+    error(...args) {
+        this.loggerType(args, this.levelLogs.ERROR);
+    }
+
+    trace(...args) {
+        this.loggerType(args, this.levelLogs.TRACE);
+    }
+}
+
+exports.logger = new LoggerService();
