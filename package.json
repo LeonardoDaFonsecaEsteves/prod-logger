@@ -7,7 +7,8 @@
     "release": "standard-version && git push --follow-tags origin main",
     "build": "npm ci && webpack --progress --config webpack.config.js",
     "test": "jest --coverage --coverageReporters='text-summary'",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "commit": "cz"
   },
   "keywords": [
     "logs",
@@ -62,6 +63,11 @@
       "cobertura"
     ]
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/plugin-proposal-class-properties": "7.8.3",
@@ -78,6 +84,7 @@
     "cache-loader": "4.1.0",
     "clean-webpack-plugin": "3.0.0",
     "compression-webpack-plugin": "^4.0.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-config-standard": "14.1.0",
