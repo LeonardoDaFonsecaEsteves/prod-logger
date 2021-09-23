@@ -1,14 +1,14 @@
 {
   "name": "prod-logger",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "FR: Module de gestion des logs en fonction du niveau a afficher ansie que d'un booléan pour determiner si on afficher les niveaux superieur ou non. EN: Log management module according to the level to be displayed as well as a boolean to determine whether to display the upper levels or not ",
-  "main": "./dist/index.js",
+  "main": "./src/index.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "release": "standard-version && git push --follow-tags origin main",
-    "build": "npm ci && webpack --progress --config webpack.config.js",
+    "build": "npm ci && cross-env NODE_ENV=production babel ./src --out-dir dist --copy-files",
     "test": "jest --coverage --coverageReporters='text-summary'",
     "test:coverage": "jest --coverage",
     "commit": "cz"
@@ -19,6 +19,7 @@
   "engineStrict": true,
   "devDependencies": {
     "@babel/core": "^7.15.5",
+    "@babel/cli": "^7.15.7",
     "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-proposal-numeric-separator": "7.8.3",
     "@babel/plugin-transform-runtime": "7.7.6",
@@ -30,13 +31,16 @@
     "jest": "^27.2.0",
     "standard-version": "^9.3.1",
     "terser-webpack-plugin": "^5.2.4",
+    "toolkit-json": "^1.0.1",
     "webpack": "^5.53.0",
     "webpack-bundle-analyzer": "4.4.0",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.1",
     "webpack-merge": "4.2.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  },
   "keywords": [
     "logs",
     "console.log",
