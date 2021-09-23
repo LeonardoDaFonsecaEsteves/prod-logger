@@ -1,13 +1,13 @@
 "use strict";
-import { JsonCircularStringify } from 'toolkit-json';
+const JsonCircularStringify = require('toolkit-json');
 class LoggerService {
   constructor() {
     this.levelLogs = {
+      TRACE: "TRACE",
       INFO: "INFO",
       DEBUG: "DEBUG",
       WARN: "WARN",
-      ERROR: "ERROR",
-      TRACE: "TRACE"
+      ERROR: "ERROR"
     };
     this.definedLevel = "";
     this.seeUpperLevel = false;
@@ -34,14 +34,14 @@ class LoggerService {
     const seeLogLevel = (level, arg) => {
       const date = new Date().toUTCString();
       const log = arg;
+      if (level === this.levelLogs.TRACE) {
+        return console.trace(`[ ${date} | TYPE: TRACE ] =>`, log);
+      }
       if (level === this.levelLogs.INFO) {
         return console.info(`[ ${date} | TYPE: INFO ] => `, log);
       }
       if (level === this.levelLogs.DEBUG) {
         return console.debug(`[ ${date} | TYPE: DEBUG ] =>`, log);
-      }
-      if (level === this.levelLogs.TRACE) {
-        return console.trace(`[ ${date} | TYPE: TRACE ] =>`, log);
       }
       if (level === this.levelLogs.WARN) {
         return console.warn(`[ ${date} | TYPE: WARN ] =>`, log);
@@ -67,13 +67,7 @@ class LoggerService {
           m += `${arg} `;
         }
       });
-      let message = "";
-      let st = m.split(" ").join(", ").split("").reverse();
-      if (st[0] === " " && st[1] === ",") {
-        st.splice(0, 2);
-        message = st.reverse().join("");
-      }
-      return message;
+      return m;
     };
 
     if (authorizedLevels) {

@@ -2,14 +2,22 @@
 
 ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/LeonardoDaFonsecaEsteves/6efb09a5572ada0bac3126f346d76e32/raw/prod-logger__heads_main.json) [![codecov](https://codecov.io/gh/LeonardoDaFonsecaEsteves/prod-logger/branch/main/graph/badge.svg?token=5QTMF25PCI)](https://codecov.io/gh/LeonardoDaFonsecaEsteves/prod-logger) [![CodeQL](https://github.com/LeonardoDaFonsecaEsteves/prod-logger/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/LeonardoDaFonsecaEsteves/prod-logger/actions/workflows/codeql-analysis.yml)
 
-***
+---
 
 ### Ceci est un module de gestion des journaux
 
-le module de gestion des journaux peut prendre un niveau de journal comme paramètre [essayez-le.](https://codesandbox.io/s/y1658?file=/src/App.js)
-***
+le module de gestion des logs peut prendre en paramètre
+
+- un niveau de journal
+- un booléan
+
+[essayez-le.](https://codesandbox.io/s/y1658?file=/src/App.js)
+
+---
 
 ## niveau de journal autorisé
+
+TRACE = Affiche la pile d'exécution dans la console. La pile est plus simplement l'enchaînement des appels via les différentes fonctions.
 
 INFO = Affiche un message d'information dans la console du navigateur. une petite icône i apparaît devant le message.
 
@@ -19,50 +27,93 @@ WARN = Affiche un message d'avertissement dans la console Web.
 
 ERREUR = Affiche un message d'erreur dans la console du navigateur.
 
-TRACE = Affiche la pile d'exécution dans la console. La pile est plus simplement l'enchaînement des appels via les différentes fonctions.
+---
 
-***
-## le premier paramètre et le niveau de log à afficher, le deuxième paramètre et un booléen qui définit si vous souhaitez afficher les niveaux au dessus de votre log
- `logger("INFO", true)`
- 
-****
-## si vous voulez afficher le niveau supérieur à info ajoutez dans le deuxième paramètre `true`
+## Commencer par construire votre logger
 
- `logger("INFO", true).info('info visible')`
- 
- `logger("INFO", true).debug('debug visible')`
+```
+   import { logger } from "prod-logger";
+   // setup config
+   logger.setup(level, seeUpperLevel);
+```
 
- `logger("INFO", true).warn('warn visible')`
+`level` = correspont au niveau de log ('trace','info','debug','warn','error')
+`seeUpperLevel` = Booléan si vrai affiche les logs superrieur sinon n'affiche que les logs du même niveau :warning: par default valeur a faux :warning:
 
- `logger("INFO", true).error('error visible')`
+---
 
- `logger("INFO", true).trace('trace visible')`
+## utilisation du logger
 
-****
+premier exemple ou la configuration et : `logger.setup('warn', false)`;
 
-## si aucun paramètre n'est saisi alors aucun niveau de journal ne sera affiché
+```
+   import { logger } from "prod-logger";
+   // setup config
+   // level = warn
+   // seeUpperLevel = false
+   logger.setup(level, seeUpperLevel);
 
-`logger().info('info non visible')`
+    logger.trace("this is log trace simple");
+    logger.info("this is log info simple");
+    logger.debug("this is log debug simple");
+    logger.warn("this is log warn simple");
+    logger.error("this is log error simple");
 
-`logger().debug('debug non visible')`
+---
+    // output //
+     [ Thu, 23 Sep 2021 16:21:25 GMT | TYPE: WARN ] => "this is log warn simple"
+---
+```
 
-`logger().warn('warn non visible')`
+deuxieme exemple ou la configuration et : `logger.setup('warn', true)`;
 
-`logger().error('error non visible')`
+```
+   import { logger } from "prod-logger";
+   // setup config
+   // level = warn
+   // seeUpperLevel = true
+   logger.setup(level, seeUpperLevel);
 
-`logger().trace('trace non visible')`
+    logger.trace("this is log trace simple");
+    logger.info("this is log info simple");
+    logger.debug("this is log debug simple");
+    logger.warn("this is log warn simple");
+    logger.error("this is log error simple");
 
-*****
+---
+   // output //
+     [ Thu, 23 Sep 2021 16:21:25 GMT | TYPE: WARN ] => "this is log warn simple"
+     [ Thu, 23 Sep 2021 16:21:25 GMT | TYPE: ERROR ] => "this is log error simple"
+---
+```
 
-## Nous pouvons définir quel niveau de journaux nous voulons afficher pour cela, il suffit de passer le niveau dans le premier paramètre et vrai dans le second
-:warning: attention le niveau supérieur sera également affiché :warning:
+selon votre configuration les logs superieur seron afficher ou non
 
- `logger("erreur").info('info non visible')`
+---
 
- `logger("error").debug('debug non visible')`
+## :warning: les argumenst passer au logger (trace,info,debug,warn,error) seront tous stringify afin d'avoir une parfaite lisibilité :warning:
 
- `logger("error").warn('warn non visible')`
+```
+   import { logger } from "prod-logger";
+   // setup config
+   // level = info
+   // seeUpperLevel = false
+   logger.setup(level, seeUpperLevel);
 
- `logger("error").error('error visible')`
+    logger.info(
+        "this is a complex array ",
+        { id: 1, str: "content object" },
+        [
+            "and another array",
+            {
+                id: 2,
+                str: "object ",
+            },
+        ]
+    );
+---
+   // output //
+     [ Thu, 23 Sep 2021 16:21:25 GMT | TYPE: INFO ] =>  this is a complex array  [{"id":1,"str":"content object"}][["and another array",{"id":2,"str":"whit object ^^"}]]
+---
+```
 
- `logger("error").trace('trace visible')`

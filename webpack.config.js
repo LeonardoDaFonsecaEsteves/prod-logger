@@ -51,6 +51,6 @@ module.exports = {
         maxAssetSize: 512000,
     },
     externals: [{
-        "toolkit-json": "toolkit-json"
+        "toolkit-json": "commonjs2 toolkit-json"
     }],
 }
