@@ -1,6 +1,6 @@
 {
   "name": "prod-logger",
-  "version": "2.2.9",
+  "version": "2.2.10",
   "description": "FR: Module de gestion des logs en fonction du niveau a afficher ansie que d'un booléan pour determiner si on afficher les niveaux superieur ou non. EN: Log management module according to the level to be displayed as well as a boolean to determine whether to display the upper levels or not ",
   "main": "dist/index.js",
   "files": [
@@ -36,11 +36,11 @@
     "webpack-bundle-analyzer": "4.4.0",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.1",
-    "webpack-merge": "4.2.2",
-    "toolkit-json": "^1.0.3"
+    "webpack-merge": "4.2.2"
   },
   "dependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "toolkit-json": "^1.0.3"
   },
   "keywords": [
     "logs",
