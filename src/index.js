@@ -1,4 +1,5 @@
 "use strict";
+import { JsonCircularStringify } from 'toolkit-json';
 class LoggerService {
   constructor() {
     this.levelLogs = {
@@ -57,22 +58,11 @@ class LoggerService {
       Object.keys(this.levelLogs)
     );
 
-    const execRecursively = (subject, _refs = null) => {
-      if (!_refs) _refs = new WeakSet();
-      if (_refs.has(subject)) {
-        return;
-      }
-      if ("object" === typeof subject) {
-        _refs.add(subject);
-        for (let key in subject) execRecursively(subject[key], _refs);
-      }
-    };
-
     const formatLog = (args) => {
       let m = "";
       args.forEach((arg) => {
         if (typeof arg === "object") {
-          m += `${JSON.stringify(arg, execRecursively())} `;
+          m += JsonCircularStringify(arg);
         } else {
           m += `${arg} `;
         }
