@@ -3,11 +3,11 @@
 import { logger } from '../src/index';
 
 describe('logger', () => {
-    const spyErr = jest.spyOn(console, 'error');
     const spyTrace = jest.spyOn(console, 'trace');
-    const spyWarn = jest.spyOn(console, 'warn');
     const spyInfo = jest.spyOn(console, 'info');
     const spyDebug = jest.spyOn(console, 'debug');
+    const spyWarn = jest.spyOn(console, 'warn');
+    const spyErr = jest.spyOn(console, 'error');
 
     afterEach(() => {
         jest.clearAllMocks();
@@ -30,7 +30,7 @@ describe('logger', () => {
     });
     it('should debug', () => {
         logger.setup('DEBUG')
-        logger.debug('test', ['test1']);
+        logger.debug('test');
         expect(spyDebug).toHaveBeenCalled();
     });
     it('should warn', () => {
@@ -55,11 +55,11 @@ describe('logger', () => {
         logger.warn('test');
         logger.error('test');
         logger.trace('test');
+        expect(spyTrace).not.toHaveBeenCalled();
         expect(spyInfo).toHaveBeenCalled();
         expect(spyDebug).not.toHaveBeenCalled();
         expect(spyWarn).not.toHaveBeenCalled();
         expect(spyErr).not.toHaveBeenCalled();
-        expect(spyTrace).not.toHaveBeenCalled();
     });
     it('should see upper level true ', () => {
         logger.setup('INFO', true)
@@ -68,11 +68,11 @@ describe('logger', () => {
         logger.warn('test');
         logger.error('test');
         logger.trace('test');
+        expect(spyTrace).not.toHaveBeenCalled();
         expect(spyInfo).toHaveBeenCalled();
         expect(spyDebug).toHaveBeenCalled();
         expect(spyWarn).toHaveBeenCalled();
         expect(spyErr).toHaveBeenCalled();
-        expect(spyTrace).toHaveBeenCalled();
     });
     it('should level defined see upper level false ', () => {
         logger.setup('ERROR')
@@ -81,11 +81,11 @@ describe('logger', () => {
         logger.warn('test');
         logger.error('test');
         logger.trace('test');
+        expect(spyTrace).not.toHaveBeenCalled();
         expect(spyInfo).not.toHaveBeenCalled();
         expect(spyDebug).not.toHaveBeenCalled();
         expect(spyWarn).not.toHaveBeenCalled();
         expect(spyErr).toHaveBeenCalled();
-        expect(spyTrace).not.toHaveBeenCalled();
     });
     it('should level defined see upper level true ', () => {
         logger.setup('ERROR', true)
@@ -94,10 +94,10 @@ describe('logger', () => {
         logger.warn('test');
         logger.error('test');
         logger.trace('test');
+        expect(spyTrace).not.toHaveBeenCalled();
         expect(spyInfo).not.toHaveBeenCalled();
         expect(spyDebug).not.toHaveBeenCalled();
         expect(spyWarn).not.toHaveBeenCalled();
         expect(spyErr).toHaveBeenCalled();
-        expect(spyTrace).toHaveBeenCalled();
     });
 });
