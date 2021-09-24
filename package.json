@@ -1,7 +1,7 @@
 {
   "name": "prod-logger",
   "version": "2.2.13",
-  "description": "FR: Module de gestion des logs en fonction du niveau a afficher ansie que d'un booléan pour determiner si on afficher les niveaux superieur ou non. EN: Log management module according to the level to be displayed as well as a boolean to determine whether to display the upper levels or not ",
+  "description": "Log management module according to the level to be displayed as well as a boolean to determine whether to display the upper levels or not ",
   "main": "dist/index.js",
   "files": [
     "dist"
