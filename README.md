@@ -1,6 +1,6 @@
 # prod-logger
 
-![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/LeonardoDaFonsecaEsteves/6efb09a5572ada0bac3126f346d76e32/raw/prod-logger__heads_main.json)[![CodeQL](https://github.com/LeonardoDaFonsecaEsteves/prod-logger/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/LeonardoDaFonsecaEsteves/prod-logger/actions/workflows/codeql-analysis.yml)
+![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/LeonardoDaFonsecaEsteves/6efb09a5572ada0bac3126f346d76e32/raw/prod-logger__heads_main.json/?target=_blank) [![CodeQL](https://github.com/LeonardoDaFonsecaEsteves/prod-logger/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/LeonardoDaFonsecaEsteves/prod-logger/actions/workflows/codeql-analysis.yml/?target=_blank)
 
 
 ---
@@ -12,7 +12,7 @@ the log management module can take as a parameter
 - a log level
 - a boolean
 
-[Try it](https://codesandbox.io/s/y1658?file=/src/App.js)
+[Try it](https://codesandbox.io/s/y1658?file=/src/App.js/?target=_blank)
 
 ---
 

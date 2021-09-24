@@ -1,7 +1,5 @@
 "use strict";
-
-const JsonCircularStringify = require('toolkit-json');
-
+import { JsonCircularStringify } from 'toolkit-json'
 /**
  * Class for LoggerService
  */
@@ -156,3 +154,5 @@ class LoggerService {
 
 // export new logger service
 export const logger = new LoggerService();
+// module export 
+module.exports.logger = new LoggerService();

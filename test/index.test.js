@@ -30,7 +30,7 @@ describe('logger', () => {
     });
     it('should debug', () => {
         logger.setup('DEBUG')
-        logger.debug('test');
+        logger.debug('test', ['test']);
         expect(spyDebug).toHaveBeenCalled();
     });
     it('should warn', () => {
