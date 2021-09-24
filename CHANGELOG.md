@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.13](https://github.com/LeonardoDaFonsecaEsteves/prod-logger/compare/v2.2.12...v2.2.13) (2021-09-24)
+
 ### [2.2.12](https://github.com/LeonardoDaFonsecaEsteves/prod-logger/compare/v2.2.11...v2.2.12) (2021-09-24)
 
 ### [2.2.11](https://github.com/LeonardoDaFonsecaEsteves/prod-logger/compare/v2.2.10...v2.2.11) (2021-09-23)
