@@ -40,7 +40,7 @@ ERREUR = Affiche un message d'erreur dans la console du navigateur.
 
 ## Start by building your logger
 
-```
+```javascript
    import { logger } from "prod-logger";
    // setup config
    logger.setup(level, seeUpperLevel);
@@ -56,7 +56,7 @@ is false :warning:
 
 First example where the configuration is: `logger.setup('warn', false)`;
 
-```
+```javascript
    import { logger } from "prod-logger";
    // setup config
    // level = warn
@@ -77,7 +77,7 @@ First example where the configuration is: `logger.setup('warn', false)`;
 
 Second example where the configuration is: `logger.setup('warn', true)`;
 
-```
+```javascript
    import { logger } from "prod-logger";
    // setup config
    // level = warn
@@ -103,7 +103,7 @@ Depending on your configuration, the higher logs will be displayed or not
 
 ## :warning: the arguments passed to the logger (trace, info, debug, warn, error) will all be stringify in order to have perfect readability
 
-```
+```javascript
    import { logger } from "prod-logger";
    // setup config
    // level = info
