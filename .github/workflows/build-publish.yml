@@ -69,10 +69,6 @@ jobs:
         message: ${{ env.COVERAGE }}
         color: green
         namedLogo: jest
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-       token: ${{ secrets.CODECOV_TOKEN }}
     - name: NPM Build
       run : npm run build
     - name: NPM Publish
